@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Order Management</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Work Order Management</h1>
+        <nav>
+            <a href="/html/index.html">Home</a>
+            <a href="/html/executed.html">Executed Orders</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Create and Execute Work Order</h2>
+            <form id="workOrderForm">
+                <label for="workOrderNumber">Work Order Number:</label>
+                <input type="text" id="workOrderNumber" name="workOrderNumber" required>
+                <br><br>
+                <label for="fileInput">Select Instructions XML File:</label>
+                <input type="file" id="fileInput" name="fileInput" accept=".xml" required>
+                <br><br>
+                <button type="submit">Load Instructions</button>
+            </form>
+
+            <div id="instructions" style="display: none;">
+                <h2>Instructions</h2>
+                <div id="instructionStep"></div>
+                <button id="prevStep" style="display: none;">Previous Step</button>
+                <button id="nextStep">Next Step</button>
+                <button id="completeOrder" style="display: none;">Complete Work Order</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Work Order Management System</p>
+    </footer>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>

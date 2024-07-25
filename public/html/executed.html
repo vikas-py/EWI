@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executed Work Orders</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Work Order Management</h1>
+        <nav>
+            <a href="/html/index.html">Home</a>
+            <a href="/html/executed.html">Executed Orders</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Executed Work Orders</h2>
+            <table id="executedOrdersTable">
+                <thead>
+                    <tr>
+                        <th>Work Order</th>
+                    </tr>
+                </thead>
+                <tbody id="executedOrdersList"></tbody>
+            </table>
+            <div id="orderDetails" style="display: none;">
+                <h2>Order Details</h2>
+                <table id="orderDetailsTable">
+                    <thead>
+                        <tr>
+                            <th>Step Number</th>
+                            <th>Step</th>
+                            <th>Input</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderDetailsContent"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Work Order Management System</p>
+    </footer>
+
+    <script src="/js/executed.js"></script>
+</body>
+</html>
