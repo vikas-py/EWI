@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><instructions>
+    <step type="info" startTime="2024-07-25T16:09:21.639Z" endTime="2024-07-25T16:09:21.639Z">Step 1: Read the initial setup instructions</step>
+    <step type="dropdown" options="Option1,Option2,Option3" inputTime="2024-07-25T16:09:26.319Z" input="Option2" startTime="2024-07-25T16:09:26.319Z" endTime="2024-07-25T16:09:26.319Z">Step 2: Select an option from the dropdown</step>
+    <step type="confirmation" startTime="2024-07-25T16:09:29.416Z" endTime="2024-07-25T16:09:29.416Z">Step 3: Confirm the completion of the setup</step>
+    <step type="userEntry" inputTime="2024-07-25T16:10:16.658Z" input="45.34" startTime="2024-07-25T16:10:16.658Z" endTime="2024-07-25T16:10:16.658Z">Step 4: Enter the configuration details</step>
+    <step type="dropdown" options="Yes,No,Maybe" inputTime="2024-07-25T16:10:18.921Z" input="Yes" startTime="2024-07-25T16:10:18.921Z" endTime="2024-07-25T16:10:18.921Z">Step 5: Select your availability</step>
+    <step type="info" startTime="2024-07-25T16:10:23.448Z" endTime="2024-07-25T16:10:23.448Z">Step 6: Review and finalize the configuration</step>
+<workOrder number="VP002"/></instructions>

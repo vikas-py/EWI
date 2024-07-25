@@ -1,6 +1,6 @@
 let currentStepIndex = 0;
 let steps;
-let outputXML;
+let outputJSON = { workOrder: { steps: [] } };
 
 document.getElementById('workOrderForm').addEventListener('submit', function (event) {
     event.preventDefault();
@@ -10,21 +10,20 @@ document.getElementById('workOrderForm').addEventListener('submit', function (ev
     if (fileInput) {
         const reader = new FileReader();
         reader.onload = function (e) {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(e.target.result, "text/xml");
-            loadInstructions(xmlDoc, workOrderNumber);
+            const jsonData = JSON.parse(e.target.result);
+            loadInstructions(jsonData, workOrderNumber);
         };
         reader.readAsText(fileInput);
     }
 });
 
-function loadInstructions(xmlDoc, workOrderNumber) {
+function loadInstructions(jsonData, workOrderNumber) {
     document.getElementById('instructions').style.display = 'block';
-    steps = xmlDoc.getElementsByTagName('step');
+    steps = jsonData.instructions;
     currentStepIndex = 0;
     displayStep();
 
-    createOutputXML(xmlDoc, workOrderNumber);
+    outputJSON.workOrder.number = workOrderNumber;
 }
 
 function displayStep() {
@@ -33,30 +32,41 @@ function displayStep() {
 
     if (currentStepIndex < steps.length) {
         const step = steps[currentStepIndex];
-        const stepText = step.textContent;
-        const stepType = step.getAttribute('type') || 'text'; // default to 'text' if no type specified
+        const stepText = step.text;
+        const stepType = step.type || 'info'; // default to 'info' if no type specified
 
         const stepElement = document.createElement('div');
         stepElement.innerHTML = `<p>Step ${currentStepIndex + 1}: ${stepText}</p>`;
 
         if (stepType === 'dropdown') {
-            const options = step.getAttribute('options').split(',');
+            const options = step.options;
             let selectHTML = '<select id="stepInput">';
             options.forEach(option => {
                 selectHTML += `<option value="${option}">${option}</option>`;
             });
             selectHTML += '</select>';
             stepElement.innerHTML += selectHTML;
+        } else if (stepType === 'userEntry') {
+            stepElement.innerHTML += `<input type="text" id="stepInput" placeholder="Enter value">`;
+        } else if (stepType === 'confirmation') {
+            stepElement.innerHTML += `<button onclick="confirmStep()">Confirm</button>`;
         }
 
         instructionStep.appendChild(stepElement);
         document.getElementById('prevStep').style.display = currentStepIndex > 0 ? 'inline' : 'none';
-        document.getElementById('nextStep').style.display = 'inline';
+        document.getElementById('nextStep').style.display = stepType !== 'confirmation' ? 'inline' : 'none';
         document.getElementById('completeOrder').style.display = 'none';
     } else {
         document.getElementById('nextStep').style.display = 'none';
         document.getElementById('completeOrder').style.display = 'inline';
     }
+}
+
+function confirmStep() {
+    recordAction('start', currentStepIndex);
+    recordAction('end', currentStepIndex);
+    currentStepIndex++;
+    displayStep();
 }
 
 document.getElementById('prevStep').addEventListener('click', function () {
@@ -76,46 +86,39 @@ document.getElementById('nextStep').addEventListener('click', function () {
     displayStep();
 });
 
-function createOutputXML(xmlDoc, workOrderNumber) {
-    const parser = new DOMParser();
-    const serializer = new XMLSerializer();
-    const xmlString = serializer.serializeToString(xmlDoc);
-    outputXML = parser.parseFromString(xmlString, "text/xml");
-    const workOrderElement = outputXML.createElement('workOrder');
-    workOrderElement.setAttribute('number', workOrderNumber);
-    outputXML.documentElement.appendChild(workOrderElement);
-}
-
 function recordAction(action, stepIndex, value = '') {
     const date = new Date();
     const timestamp = date.toISOString();
-    const step = outputXML.getElementsByTagName('step')[stepIndex];
-    step.setAttribute(action + 'Time', timestamp);
-    if (action === 'input') {
-        step.setAttribute('input', value);
+    const step = steps[stepIndex];
+
+    if (!outputJSON.workOrder.steps[stepIndex]) {
+        outputJSON.workOrder.steps[stepIndex] = { text: step.text, actions: {} };
     }
+
+    if (action === 'input') {
+        outputJSON.workOrder.steps[stepIndex].input = value;
+    }
+
+    outputJSON.workOrder.steps[stepIndex].actions[action] = timestamp;
 }
 
 document.getElementById('completeOrder').addEventListener('click', function () {
-    const serializer = new XMLSerializer();
-    const xmlStr = serializer.serializeToString(outputXML);
-    saveWorkOrder(xmlStr);
+    saveWorkOrder(outputJSON);
 });
 
-function saveWorkOrder(xmlStr) {
+function saveWorkOrder(jsonData) {
     const workOrderNumber = document.getElementById('workOrderNumber').value;
 
     fetch(`/saveWorkOrder?workOrderNumber=${workOrderNumber}`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/xml',
+            'Content-Type': 'application/json',
         },
-        body: xmlStr,
+        body: JSON.stringify(jsonData),
     })
     .then(response => response.text())
     .then(result => {
         alert(result);
-        // Only add link if we are on the executed orders page
         if (document.getElementById('executedOrdersList')) {
             addExecutedOrderLink(workOrderNumber);
         }
@@ -130,7 +133,7 @@ function addExecutedOrderLink(workOrderNumber) {
     const row = executedOrdersList.insertRow();
     const cell = row.insertCell(0);
     const linkElement = document.createElement('a');
-    linkElement.href = `executed.html?file=WorkOrder_${workOrderNumber}_instructions_set.xml`;
+    linkElement.href = `executed.html?file=WorkOrder_${workOrderNumber}_instructions_set.json`;
     linkElement.textContent = `Work Order ${workOrderNumber}`;
     cell.appendChild(linkElement);
 }

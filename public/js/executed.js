@@ -22,11 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function fetchOrderDetails(fileName) {
     fetch(`/executedOrder?fileName=${fileName}`)
-        .then(response => response.text())
+        .then(response => response.json())
         .then(data => {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(data, "text/xml");
-            const steps = xmlDoc.getElementsByTagName('step');
+            const steps = data.workOrder.steps;
             const orderDetailsContent = document.getElementById('orderDetailsContent');
             orderDetailsContent.innerHTML = '';
 
@@ -35,10 +33,10 @@ function fetchOrderDetails(fileName) {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${i + 1}</td>
-                    <td>${step.textContent}</td>
-                    <td>${step.getAttribute('input') || ''}</td>
-                    <td>${step.getAttribute('startTime') || ''}</td>
-                    <td>${step.getAttribute('endTime') || ''}</td>
+                    <td>${step.text}</td>
+                    <td>${step.input || ''}</td>
+                    <td>${step.actions.start || ''}</td>
+                    <td>${step.actions.end || ''}</td>
                 `;
                 orderDetailsContent.appendChild(row);
             }

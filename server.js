@@ -6,25 +6,22 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
-// Middleware to serve static files
-app.use('/css', express.static(path.join(__dirname, 'public/css')));
-app.use('/js', express.static(path.join(__dirname, 'public/js')));
-app.use('/html', express.static(path.join(__dirname, 'public/html')));
-app.use(bodyParser.text({ type: 'application/xml' }));
+app.use(express.static('public'));
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/html/index.html'));
 });
 
-app.get('/executed.html', (req, res) => {
+app.get('/html/executed.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/html/executed.html'));
 });
 
 app.post('/saveWorkOrder', (req, res) => {
     const workOrderNumber = req.query.workOrderNumber;
-    const filePath = path.join(__dirname, 'executed', `WorkOrder_${workOrderNumber}_instructions_set.xml`);
+    const filePath = path.join(__dirname, 'executed', `WorkOrder_${workOrderNumber}_instructions_set.json`);
 
-    fs.writeFile(filePath, req.body, (err) => {
+    fs.writeFile(filePath, JSON.stringify(req.body, null, 2), (err) => {
         if (err) {
             res.status(500).send('Error saving file');
         } else {
@@ -38,7 +35,7 @@ app.get('/executedOrders', (req, res) => {
         if (err) {
             res.status(500).send('Error reading executed orders directory');
         } else {
-            res.json(files.filter(file => file.endsWith('.xml')));
+            res.json(files.filter(file => file.endsWith('.json')));
         }
     });
 });
