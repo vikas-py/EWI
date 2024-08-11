@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><instructions>
-    <step type="text" startTime="2024-07-25T15:56:01.394Z" endTime="2024-07-25T15:56:01.394Z">Step 1: Enter the system name</step>
-    <step type="dropdown" options="Option1,Option2,Option3" inputTime="2024-07-25T15:56:05.372Z" input="Option2" startTime="2024-07-25T15:56:05.372Z" endTime="2024-07-25T15:56:05.372Z">Step 2: Select an option from the dropdown</step>
-    <step type="confirmation" startTime="2024-07-25T15:56:08.189Z" endTime="2024-07-25T15:56:08.189Z">Step 3: Confirm that the setup is complete</step>
-    <step type="text" startTime="2024-07-25T15:56:09.390Z" endTime="2024-07-25T15:56:09.390Z">Step 4: Enter the configuration details</step>
-    <step type="dropdown" options="Yes,No,Maybe" inputTime="2024-07-25T15:56:13.668Z" input="No" startTime="2024-07-25T15:56:13.668Z" endTime="2024-07-25T15:56:13.668Z">Step 5: Select your availability</step>
-    <step type="text" startTime="2024-07-25T15:56:21.593Z" endTime="2024-07-25T15:56:21.593Z">Step 6: Provide any additional comments</step>
-<workOrder number="VP001"/></instructions>
