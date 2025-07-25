@@ -8,7 +8,11 @@ def load_sop(xml_path: Path) -> List[Step]:
     root = tree.getroot()
     steps = []
     for step_el in root.findall("step"):
-        step_id = step_el.get("id") or str(len(steps) + 1)
+        step_id = step_el.get("id")
+        if step_id is None:
+            step_id = step_el.findtext("id")
+        if not step_id:
+            step_id = str(len(steps) + 1)
         description = step_el.findtext("description", default="")
         inputs_el = step_el.find("inputs")
         inputs = []
