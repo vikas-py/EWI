@@ -16,7 +16,9 @@
 
 3. **Store User Inputs:**
 
-   * For each step completed, capture the user's inputs and store them in a structured file, such as a JSON or CSV file.
+   * For each step completed, capture the user's inputs.
+   * Responses are stored in JSON format in `responses.json`.
+   * To store data in CSV, replace the JSON storage backend with a CSV implementation.
    * Each entry should contain:
 
      * The step ID.
