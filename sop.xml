@@ -1,0 +1,18 @@
+<sop>
+    <step id="1">
+        <description>Enter your name</description>
+        <inputs>
+            <input name="name">
+                <prompt>Your Name</prompt>
+            </input>
+        </inputs>
+    </step>
+    <step id="2">
+        <description>Enter your email</description>
+        <inputs>
+            <input name="email" type="email">
+                <prompt>Your Email</prompt>
+            </input>
+        </inputs>
+    </step>
+</sop>
