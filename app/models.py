@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional
 
 class StepInput(BaseModel):
@@ -9,7 +9,7 @@ class StepInput(BaseModel):
 class Step(BaseModel):
     id: str
     description: str
-    inputs: List[StepInput] = []
+    inputs: List[StepInput] = Field(default_factory=list)
 
 class StepResponse(BaseModel):
     step_id: str
