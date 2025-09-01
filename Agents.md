@@ -159,18 +159,6 @@ This document outlines the responsibilities, tasks, workflow, and implementation
 
 ## File Structure
 
-The following file structure is used for the project:
-
-```
-/project_root
-  ├── /static              # Static files (CSS, JS, images)
-  ├── /templates           # HTML templates for instruction display
-  ├── /app.py              # FastAPI app code
-  ├── /instructions.xml    # XML file containing instructions
-  ├── /user_data.json      # Running file to store user inputs
-  └── /requirements.txt    # List of dependencies
-```
-
 ### **instructions.xml** Example:
 
 ```xml
@@ -222,28 +210,3 @@ The following file structure is used for the project:
 
   * Test for correct flow through all steps.
   * Ensure the completion message appears after the last step.
-
----
-
-## Deployment
-
-### **1. Server Setup**
-
-* **Requirements:** The FastAPI app should be deployed on a server that supports asynchronous web frameworks, such as **Uvicorn** or **Gunicorn**.
-* **Deployment Steps:**
-
-  * Install required dependencies:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-  * Run the app using Uvicorn:
-
-    ```bash
-    uvicorn app:app --reload
-    ```
-  * If deploying to production, consider using **Docker** or a process manager like **Gunicorn** for better scalability and performance.
-
----
-
-This more detailed `Codex Agents.md` should help in guiding the development and deployment of your web app project with FastAPI and give the Codex agents clear roles and workflows for handling user interactions.
