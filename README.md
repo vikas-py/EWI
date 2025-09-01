@@ -33,26 +33,3 @@
 
    * If the user inputs incorrect data or leaves a field blank, prompt them to correct it.
    * If the user submits invalid data (e.g., in the case of an incorrect format or missing fields), inform them politely and allow them to re-enter the data.
-
-
-## Running the App
-
-1. Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-2. Start the server:
-
-```bash
-uvicorn app.main:app --reload
-```
-
-The API exposes the following endpoints:
-
-- `GET /sop/start` – fetch the first step.
-- `GET /sop/step/{step_id}` – retrieve a step by ID.
-- `POST /sop/step/{step_id}` – submit user input for a step and advance.
-
-Responses are stored in `responses.json`.
