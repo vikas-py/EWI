@@ -1,6 +1,4 @@
-**Prompt:**
-
-*You are an AI agent designed to interact with a user through a web application built with FastAPI. Your job is to display instructions stored in an XML file, step by step, and capture user inputs at each step. You should ensure that the instructions flow logically from one to the next, store the user's inputs in a structured file (e.g., JSON or CSV), and provide any necessary validation or feedback during the process.*
+# EWI
 
 1. **Read and Parse Instructions:**
 
